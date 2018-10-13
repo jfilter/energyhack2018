@@ -23,13 +23,19 @@ function someFunction(step, hideDate, hideTime, hideScale) {
 
   var formatNumber = d3.format('s');
 
-  var color = d3.scale
+  var color_1 = d3.scale
     .linear()
     .domain([0, 0.75, 1.5])
     .interpolate(d3.interpolateHcl)
     .range([d3.rgb('#ccebc5'), d3.rgb('#b3cde3'), d3.rgb('#fbb4ae')]);
 
-  d3.select('svg').remove();
+  var color_2 = d3.scale
+    .linear()
+    .domain([0, 1])
+    .interpolate(d3.interpolateHcl)
+    .range([d3.rgb('black'), d3.rgb('blue')]);
+
+  d3.selectAll('svg').remove();
 
   var svg = d3
     .select('body')
@@ -39,24 +45,43 @@ function someFunction(step, hideDate, hideTime, hideScale) {
     .append('g')
     .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
 
-  d3.csv('data/' + step + '.csv', function(error, data) {
+  var svg2 = d3
+    .select('body')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    // .attr('opacity', 0.5)
+    .append('g')
+    .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');
+
+  d3.csv('data/' + step + '.csv', (error, hal) =>
+    bla(error, hal, color_1, 2000, svg, 1)
+  );
+
+  d3.csv('data_nieder/' + step + '.csv', (error, hal) =>
+    bla(error, hal, color_2, 1, svg2, 4)
+  );
+
+  function bla(error, data, color, factor, svg, timefac) {
     // data.sort(function(a, b) {
     //   return b.value - a.value;
     // });
 
     // const maxValue = d3.max(data.map(x => x.value));
     // console.log(maxValue);
-
-    data.forEach(x => (x.value = x.value / 2000));
+    if (factor === 2000) data.forEach(x => (x.value = x.value / factor));
+    else data.forEach(x => (x.value = Math.log(x.value)));
 
     // cosno
-    const rawDate = data[0].date.split('/');
-    let dd = days(rawDate[1] + '/' + rawDate[0] + '/' + rawDate[2]);
+    if (factor === 2000) {
+      const rawDate = data[0].date.split('/');
+      let dd = days(rawDate[1] + '/' + rawDate[0] + '/' + rawDate[2]);
 
-    if (hideDate) {
-      d3.select('#date').text('');
-    } else {
-      d3.select('#date').text(dd.format('DD.MM.YYYY, dddd'));
+      if (hideDate) {
+        d3.select('#date').text('');
+      } else {
+        d3.select('#date').text(dd.format('DD.MM.YYYY, dddd'));
+      }
     }
 
     var extent = d3.extent(data, function(d) {
@@ -128,7 +153,7 @@ function someFunction(step, hideDate, hideTime, hideScale) {
       .ease('elastic')
       .duration(1000)
       .delay(function(d, i) {
-        return i * 100;
+        return i * 100 * timefac;
       })
       .attrTween('d', function(d, index) {
         var i = d3.interpolate(d.outerRadius, barScale(+d.value));
@@ -207,7 +232,7 @@ function someFunction(step, hideDate, hideTime, hideScale) {
         }
         return '';
       });
-  });
+  }
 }
 
 export default someFunction;

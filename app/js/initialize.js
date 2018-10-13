@@ -1,10 +1,20 @@
 import someFunction from './someFile';
 
 let int = null;
-let i = 0;
+// let i = 0;
+let i = 28;
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('initialized');
+
+  const spl = window.location.href.split('/');
+  const value = spl[spl.length - 1];
+  console.log(value);
+  var isNumber = value.match(/^[0-9]+$/);
+  if (isNumber) {
+    i = parseInt(value);
+  }
+  console.log(i);
   doFun(i++);
   int = setInterval(() => {
     const xx = i++ % 360;
