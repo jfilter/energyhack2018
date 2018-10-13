@@ -1,28 +1,28 @@
 // import d3 from 'd3';
 
+const times = [
+  '3:00',
+  '6:00',
+  '9:00',
+  '12:00',
+  '15:00',
+  '18:00',
+  '21:00',
+  '0:00',
+];
+
 function someFunction(step) {
   var width = 960,
-    height = 500,
-    barHeight = height / 2 - 40;
+    height = 600,
+    barHeight = 500 / 2 - 40;
 
   var formatNumber = d3.format('s');
 
   var color = d3.scale
-    .ordinal()
-    .range([
-      '#8dd3c7',
-      '#ffffb3',
-      '#bebada',
-      '#fb8072',
-      '#80b1d3',
-      '#fdb462',
-      '#b3de69',
-      '#fccde5',
-      '#d9d9d9',
-      '#bc80bd',
-      '#ccebc5',
-      '#ffed6f',
-    ]);
+    .linear()
+    .domain([0, 0.75, 1.5])
+    .interpolate(d3.interpolateHcl)
+    .range([d3.rgb('#ccebc5'), d3.rgb('#b3cde3'), d3.rgb('#fbb4ae')]);
 
   d3.select('svg').remove();
 
@@ -39,14 +39,22 @@ function someFunction(step) {
     //   return b.value - a.value;
     // });
 
+    // const maxValue = d3.max(data.map(x => x.value));
+    // console.log(maxValue);
+
     data.forEach(x => (x.value = x.value / 2000));
+
+    // cosno
+
+    console.log(data);
 
     var extent = d3.extent(data, function(d) {
       return d.value;
     });
     var barScale = d3.scale
       .linear()
-      .domain(extent)
+      // .domain(extent)
+      .domain([0, 1])
       .range([0, barHeight]);
 
     var keys = data.map(function(d, i) {
@@ -98,7 +106,7 @@ function someFunction(step) {
         d.outerRadius = 0;
       })
       .style('fill', function(d) {
-        return color(d.time);
+        return color(d.value);
       })
       .attr('d', arc);
 
@@ -134,7 +142,8 @@ function someFunction(step) {
       .style('stroke', 'black')
       .style('stroke-width', '.5px')
       .attr('transform', function(d, i) {
-        return 'rotate(' + (i * 360) / numBars + ')';
+        if (times.includes(d)) return 'rotate(' + (i * 360) / numBars + ')';
+        return '';
       });
 
     svg
@@ -178,7 +187,10 @@ function someFunction(step) {
         return (i * 100) / numBars + 50 / numBars + '%';
       })
       .text(function(d) {
-        return d.toUpperCase();
+        if (times.includes(d)) {
+          return d.toUpperCase();
+        }
+        return '';
       });
   });
 }
