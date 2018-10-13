@@ -16,7 +16,7 @@ const times = [
   // '0:00',
 ];
 
-function someFunction(step) {
+function someFunction(step, hideDate, hideTime, hideScale) {
   var width = 960,
     height = 600,
     barHeight = 500 / 2 - 40;
@@ -53,7 +53,11 @@ function someFunction(step) {
     const rawDate = data[0].date.split('/');
     let dd = days(rawDate[1] + '/' + rawDate[0] + '/' + rawDate[2]);
 
-    d3.select('#date').text(dd.format('DD.MM.YYYY, dddd'));
+    if (hideDate) {
+      d3.select('#date').text('');
+    } else {
+      d3.select('#date').text(dd.format('DD.MM.YYYY, dddd'));
+    }
 
     var extent = d3.extent(data, function(d) {
       return d.value;
@@ -78,8 +82,10 @@ function someFunction(step) {
       .axis()
       .scale(x)
       .orient('left')
-      .ticks(3)
-      .tickFormat(formatNumber);
+      .ticks(hideScale ? 0 : 3)
+      // .ticks(3)
+      .tickFormat(d => d + ' l/s');
+    // .tickFormat(formatNumber);
 
     // var circles = svg
     //   .selectAll('circle')
@@ -132,27 +138,29 @@ function someFunction(step) {
         };
       });
 
-    svg
-      .append('circle')
-      .attr('r', barHeight)
-      .classed('outer', true)
-      .style('fill', 'none')
-      .style('stroke', 'lightgrey')
-      .style('stroke-width', '1px');
-
-    var lines = svg
-      .selectAll('line')
-      .data(keys)
-      .enter()
-      .append('line')
-      .attr('y2', -barHeight - 0)
-      .style('stroke', 'lightgrey')
-      .style('stroke-width', '.5px')
-      .attr('transform', function(d, i) {
-        if (times.includes(d)) return 'rotate(' + (i * 360) / numBars + ')';
-        return '';
-      });
-
+    if (!hideTime) {
+      svg
+        .append('circle')
+        .attr('r', barHeight)
+        .classed('outer', true)
+        .style('fill', 'none')
+        .style('stroke', 'lightgrey')
+        .style('stroke-width', '1px');
+    }
+    if (!hideTime) {
+      var lines = svg
+        .selectAll('line')
+        .data(keys)
+        .enter()
+        .append('line')
+        .attr('y2', -barHeight - 0)
+        .style('stroke', 'lightgrey')
+        .style('stroke-width', '.5px')
+        .attr('transform', function(d, i) {
+          if (times.includes(d)) return 'rotate(' + (i * 360) / numBars + ')';
+          return '';
+        });
+    }
     svg
       .append('g')
       .attr('class', 'x axis')
@@ -194,7 +202,7 @@ function someFunction(step) {
         return (i * 100) / numBars + 50 / numBars + '%';
       })
       .text(function(d) {
-        if (times.includes(d)) {
+        if (!hideTime && times.includes(d)) {
           return d.toUpperCase();
         }
         return '';
