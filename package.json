@@ -12,6 +12,7 @@
   "dependencies": {
     "bootstrap": "^4",
     "d3": "^5.7.0",
+    "dayjs": "^1.7.7",
     "jquery": "^3",
     "popper.js": "^1"
   },

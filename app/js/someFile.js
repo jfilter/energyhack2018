@@ -1,5 +1,10 @@
 // import d3 from 'd3';
 
+import days from 'dayjs';
+import 'dayjs/locale/de'; // load on demand
+
+days.locale('de'); // use Spanish locale globally
+
 const times = [
   '3:00',
   '6:00',
@@ -45,8 +50,10 @@ function someFunction(step) {
     data.forEach(x => (x.value = x.value / 2000));
 
     // cosno
+    const rawDate = data[0].date.split('/');
+    let dd = days(rawDate[1] + '/' + rawDate[0] + '/' + rawDate[2]);
 
-    console.log(data);
+    d3.select('#date').text(dd.format('DD.MM.YYYY, dddd'));
 
     var extent = d3.extent(data, function(d) {
       return d.value;

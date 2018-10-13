@@ -1,10 +1,12 @@
 import someFunction from './someFile';
 
+let int = null;
+let i = 0;
+
 document.addEventListener('DOMContentLoaded', () => {
   console.log('initialized');
-  let i = 0;
   someFunction(i++);
-  setInterval(() => {
+  int = setInterval(() => {
     const xx = i++ % 360;
     someFunction(xx);
   }, 10000);
