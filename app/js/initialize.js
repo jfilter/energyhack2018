@@ -7,10 +7,13 @@ let i = 0;
 document.addEventListener('DOMContentLoaded', () => {
   console.log('initialized');
 
-  const spl = window.location.href.split('/');
-  const value = spl[spl.length - 1];
-  console.log(value);
-  var isNumber = value.match(/^[0-9]+$/);
+  // const spl = window.location.href.split('/');
+  // const value = spl[spl.length - 1];
+  // console.log(value);
+
+  let urlParams = new URLSearchParams(window.location.search);
+  let value = urlParams.get('i');
+  var isNumber = value && value.match(/^[0-9]+$/);
   if (isNumber) {
     i = parseInt(value);
   }
