@@ -16,7 +16,7 @@ const times = [
   // '0:00',
 ];
 
-function someFunction(step, hideDate, hideTime, hideScale) {
+function someFunction(step, hideDate, hideTime, hideScale, hideWater) {
   var width = 960,
     height = 600,
     barHeight = 500 / 2 - 40;
@@ -58,9 +58,11 @@ function someFunction(step, hideDate, hideTime, hideScale) {
     bla(error, hal, color_1, 2000, svg, 1)
   );
 
-  d3.csv('data_nieder/' + step + '.csv', (error, hal) =>
-    bla(error, hal, color_2, 1, svg2, 4)
-  );
+  if (!hideWater) {
+    d3.csv('data_nieder/' + step + '.csv', (error, hal) =>
+      bla(error, hal, color_2, 1, svg2, 4)
+    );
+  }
 
   function bla(error, data, color, factor, svg, timefac) {
     // data.sort(function(a, b) {
@@ -98,18 +100,20 @@ function someFunction(step, hideDate, hideTime, hideScale) {
     });
     var numBars = keys.length;
 
-    var x = d3.scale
-      .linear()
-      .domain([0, 2000])
-      .range([0, -barHeight]);
+    if (factor === 2000) {
+      var x = d3.scale
+        .linear()
+        .domain([0, 2000])
+        .range([0, -barHeight]);
 
-    var xAxis = d3.svg
-      .axis()
-      .scale(x)
-      .orient('left')
-      .ticks(hideScale ? 0 : 3)
-      // .ticks(3)
-      .tickFormat(d => d + ' l/s');
+      var xAxis = d3.svg
+        .axis()
+        .scale(x)
+        .orient('left')
+        .ticks(hideScale ? 0 : 3)
+        // .ticks(3)
+        .tickFormat(d => d + ' l/s');
+    }
     // .tickFormat(formatNumber);
 
     // var circles = svg
@@ -172,7 +176,7 @@ function someFunction(step, hideDate, hideTime, hideScale) {
         .style('stroke', 'lightgrey')
         .style('stroke-width', '1px');
     }
-    if (!hideTime) {
+    if (!hideTime && factor === 2000) {
       var lines = svg
         .selectAll('line')
         .data(keys)
@@ -186,11 +190,13 @@ function someFunction(step, hideDate, hideTime, hideScale) {
           return '';
         });
     }
-    svg
-      .append('g')
-      .attr('class', 'x axis')
-      .call(xAxis);
 
+    if (factor === 2000 && !hideScale) {
+      svg
+        .append('g')
+        .attr('class', 'x axis')
+        .call(xAxis);
+    }
     // Labels
     var labelRadius = barHeight * 1.025;
 
