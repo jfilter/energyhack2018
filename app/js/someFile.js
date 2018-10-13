@@ -8,7 +8,7 @@ const times = [
   '15:00',
   '18:00',
   '21:00',
-  '0:00',
+  // '0:00',
 ];
 
 function someFunction(step) {
@@ -64,7 +64,7 @@ function someFunction(step) {
 
     var x = d3.scale
       .linear()
-      .domain(extent)
+      .domain([0, 2000])
       .range([0, -barHeight]);
 
     var xAxis = d3.svg
@@ -74,18 +74,18 @@ function someFunction(step) {
       .ticks(3)
       .tickFormat(formatNumber);
 
-    var circles = svg
-      .selectAll('circle')
-      .data(x.ticks(3))
-      .enter()
-      .append('circle')
-      .attr('r', function(d) {
-        return barScale(d);
-      })
-      .style('fill', 'none')
-      .style('stroke', 'black')
-      .style('stroke-dasharray', '2,2')
-      .style('stroke-width', '.5px');
+    // var circles = svg
+    //   .selectAll('circle')
+    //   .data(x.ticks(3))
+    //   .enter()
+    //   .append('circle')
+    //   .attr('r', function(d) {
+    //     return barScale(d);
+    //   })
+    //   .style('fill', 'none')
+    //   .style('stroke', 'black')
+    //   .style('stroke-dasharray', '2,2')
+    //   .style('stroke-width', '.5px');
 
     var arc = d3.svg
       .arc()
@@ -130,16 +130,16 @@ function someFunction(step) {
       .attr('r', barHeight)
       .classed('outer', true)
       .style('fill', 'none')
-      .style('stroke', 'black')
-      .style('stroke-width', '1.5px');
+      .style('stroke', 'lightgrey')
+      .style('stroke-width', '1px');
 
     var lines = svg
       .selectAll('line')
       .data(keys)
       .enter()
       .append('line')
-      .attr('y2', -barHeight - 20)
-      .style('stroke', 'black')
+      .attr('y2', -barHeight - 0)
+      .style('stroke', 'lightgrey')
       .style('stroke-width', '.5px')
       .attr('transform', function(d, i) {
         if (times.includes(d)) return 'rotate(' + (i * 360) / numBars + ')';
