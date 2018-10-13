@@ -1,4 +1,4 @@
-// import d3 from 'd3';
+import d3 from 'd3';
 
 import days from 'dayjs';
 import 'dayjs/locale/de'; // load on demand
