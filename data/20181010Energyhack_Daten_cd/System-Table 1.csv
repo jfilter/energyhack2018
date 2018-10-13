@@ -1,0 +1,18 @@
+;BHKW 1;BHKW 2;BHKW 3;MGT 1;MGT 2;Kessel;;;Speicher 1 (drucklos);Speicher 2 (hochdruck);;FaulgasBrennwert;
+eta_el;0,37;0,42;0,42;0,30;0,32;;-;Volumen;10000;30000;Nm³;6;kWh/Nm³
+P_el_max;526,00;600,00;400,00;200,00;200,00;-;kW;ch Kapaz;60000;180000;kWh_ch;;
+P_el_min;200,00;300,00;200,00;100,00;100,00;;kW;el. Kapaz;22681,9193324061;68045,7579972183;kWh_el;;
+eta_th;0,32;0,42;0,42;0,35;0,48;0,95;-;Verdichterleistung;-;0,2;kWh/Nm³;;
+P_th_max;481,29;0,42;393,44;276,67;294,36;3500,00;kW;;;;;;
+P_th_min;481,29;0,21;196,72;138,33;147,18;;kW;P_el_max_aggr;2726;;kW;;
+V°_FG_max;230,70;360000,00;164,35;116,96;104,12;;m³/h;Max Pot FG-P_maxAggr;647,396037572686;;kW;;
+V°_FG_min;110,00;143,80;82,17;58,48;52,06;;m³/h;t_max_Gasausspeisung;140,142466224839;;h;;
+;;;;;;;;;;;;;
+;;;;;;;;;;;;;
+Mit Hilfe von Lastabwurf, kann der Stromverbrauch des Klärwerkes zeitweise reduziert werden.;;;;;;;;;;;;;
+Abhängig vom Abwasserzulaufstrom (bis max. 2000 L/s), kann die Arbeit der Gebläse um 50% der Nennleistung für 30min 1xtäglich reduziert werden.;;;;;;;;;;;;;
+;;;;;;;;;;;;;
+;;;;;;;;;;;;;
+Zukünftiger Energiebedarf;;;;;;;;;;;;;
+Ozonung;;Flockungsfiltration;;;;;;;;;;;
+0,122;kWh/m³;0,0128;kWh/m³;;;;;;;;;;

@@ -1,0 +1,18 @@
+body {
+  font-family: 'Lato', sans-serif;
+}
+
+.page-header {
+  margin-top: 3rem;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
