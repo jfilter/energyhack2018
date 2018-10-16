@@ -17,10 +17,6 @@ exports.plugins = {
   },
 };
 
-exports.paths = {
-  public: 'docs',
-};
-
 exports.modules = {
   autoRequire: {
     'js/app.js': ['js/initialize'],

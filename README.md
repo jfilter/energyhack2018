@@ -8,4 +8,4 @@ Website bootstrapped with [Brunch on Speed](https://github.com/jfilter/brunch-on
 
 Based on Brice Pierre de la Briere's work with [D3](https://d3js.org/): https://bl.ocks.org/bricedev/8aaef92e64007f882267
 
-Check it out: https://jfilter.github.io/energyhack2018/
+Check it out: https://vis.one/energyhack2018/
